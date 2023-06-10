@@ -1,26 +1,50 @@
 import { useState } from 'react';
 import { StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
-import StartGameScreen from './screens/StartGameScreen';
-
 import { LinearGradient } from 'expo-linear-gradient';
+import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
+import Colors from './constants/colors';
+import GameOverScreen from './screens/GameOverScreen';
+import { useFonts } from 'expo-font';
 
 export default function App() {
     const [userNumber, setUserNumber] = useState();
 
+    const [gameIsOver, setGameIsOver] = useState(true);
+
+    const [fontsLoaded] = useFonts({
+        'Open-Sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+        'Open-Sans-Bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+    });
+
+    if (!fontsLoaded) {
+        return;
+    }
+
     function pickedNumberHandler(pickedNumber) {
         setUserNumber(pickedNumber);
+        setGameIsOver(false);
+    }
+
+    function gameOverHandler() {
+        setGameIsOver(true);
     }
 
     let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
 
     if (userNumber) {
-        screen = <GameScreen />;
+        screen = (
+            <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
+        );
+    }
+
+    if (gameIsOver && userNumber) {
+        screen = <GameOverScreen />;
     }
 
     return (
         <LinearGradient
-            colors={['#4e0329', '#ddb52f']}
+            colors={[Colors.primary700, Colors.accent500]}
             style={styles.rootScreen}
         >
             <ImageBackground
