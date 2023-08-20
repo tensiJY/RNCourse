@@ -19,9 +19,16 @@ function MealsOverViewScreen({ navigation, route }) {
     //console.log(displayedMeals);
 
     function renderMealItem(itemData) {
-        console.log(itemData);
+        const item = itemData.item;
 
-        return <MealItem title={itemData.item.title} />;
+        const mealItemProps = {
+            title: item.title,
+            imageUrl: item.imageUrl,
+            affordability: item.affordability,
+            complexity: item.complexity,
+            duration: item.duration,
+        };
+        return <MealItem {...mealItemProps} />;
     }
 
     return (
