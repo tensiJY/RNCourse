@@ -1,6 +1,8 @@
+import { useLayoutEffect } from 'react';
+
 import { View, FlatList, StyleSheet } from 'react-native';
 
-import { MEALS } from '../data/dummy-data';
+import { CATEGORIES, MEALS } from '../data/dummy-data';
 import MealItem from '../components/MealItem';
 
 function MealsOverViewScreen({ navigation, route }) {
@@ -18,10 +20,21 @@ function MealsOverViewScreen({ navigation, route }) {
 
     //console.log(displayedMeals);
 
+    useLayoutEffect(() => {
+        const categoryTitle = CATEGORIES.find(
+            (category) => category.id === categoryId
+        ).title;
+
+        navigation.setOptions({
+            title: categoryTitle,
+        });
+    }, [categoryId, navigation]);
+
     function renderMealItem(itemData) {
         const item = itemData.item;
 
         const mealItemProps = {
+            id: item.id,
             title: item.title,
             imageUrl: item.imageUrl,
             affordability: item.affordability,
