@@ -9,6 +9,31 @@ import MealDetailScreen from './screens/MealDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
+// import { createDrawerNavigator } from '@react-navigation/drawer';
+// import 'react-native-gesture-handler';
+// import FavoriteScreen from './screens/FavoriteScreen';
+
+// const Drawer = createDrawerNavigator();
+
+// function DrawerNavigator() {
+//     return (
+//         <Drawer.Navigator
+//             screenOptions={{
+//                 headerStyle: {
+//                     backgroundColor: '#351401',
+//                 },
+//                 headerTintColor: 'white',
+//                 contentStyle: {
+//                     backgroundColor: '#3f2f25',
+//                 },
+//             }}
+//         >
+//             <Drawer.Screen name="Categories" componenet={CategoriesScreen} />
+//             <Drawer.Screen name="Favorite" componenet={FavoriteScreen} />
+//         </Drawer.Navigator>
+//     );
+// }
+
 export default function App() {
     return (
         <>
@@ -27,9 +52,11 @@ export default function App() {
                 >
                     <Stack.Screen
                         name="MealsCategories"
+                        //component={DrawerNavigator}
                         component={CategoriesScreen}
                         options={{
-                            title: 'all categories',
+                            //title: 'all categories',
+                            headerShown: false,
                         }}
                     />
                     <Stack.Screen

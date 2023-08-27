@@ -21,12 +21,14 @@ function CategoriesScreen({ navigation }) {
     }
 
     return (
-        <FlatList
-            data={CATEGORIES}
-            keyExtractor={(item) => item.id}
-            renderItem={renderCategoryItem}
-            numColumns={2}
-        />
+        <>
+            <FlatList
+                data={CATEGORIES}
+                keyExtractor={(item) => item.id}
+                renderItem={renderCategoryItem}
+                numColumns={2}
+            />
+        </>
     );
 }
 
