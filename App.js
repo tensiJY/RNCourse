@@ -15,10 +15,12 @@ import FavoritesScreen from './src/screens/FavoritesScreen';
 
 const Drawer = createDrawerNavigator();
 
-import FavoritesContextProvider from './src/store/context/favorites-context';
+//import FavoritesContextProvider from './src/store/context/favorites-context';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconButton from './src/components/IconButton';
+import {Provider} from 'react-redux';
+import {store} from './src/store/redux/store';
 
 function DrawerNavigator() {
   return (
@@ -46,7 +48,6 @@ function DrawerNavigator() {
         name="Favorites"
         component={FavoritesScreen}
         options={{
-          // title: 'aa',
           drawerIcon: ({color, size}) => {},
         }}
       />
@@ -58,7 +59,8 @@ const App = () => {
   return (
     <>
       <StatusBar animated={true} backgroundColor="#351401" />
-      <FavoritesContextProvider>
+      {/* <FavoritesContextProvider> */}
+      <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
@@ -95,7 +97,8 @@ const App = () => {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </FavoritesContextProvider>
+      </Provider>
+      {/* </FavoritesContextProvider> */}
     </>
   );
 };

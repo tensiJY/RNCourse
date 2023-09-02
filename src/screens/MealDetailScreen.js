@@ -8,28 +8,52 @@ import MealDetails from '../components/MealDetails';
 import {MEALS} from '../data/dummy-data';
 
 import IconButton from '../components/IconButton';
-import {FavoritesContext} from '../store/context/favorites-context';
+import {useSelector, useDispatch} from 'react-redux';
+import {addFavorite, removeFavorite} from '../store/redux/favorites';
+
+//import {FavoritesContext} from '../store/context/favorites-context';
 
 function MealDetailScreen({route, navigation}) {
-  const favoriteMealsCtx = React.useContext(FavoritesContext);
+  //const favoriteMealsCtx = React.useContext(FavoritesContext);
+
+  // store.js favoriteMeals
+  const favoriteMealIds = useSelector(state => state.favoriteMeals.ids);
+  const dispatch = useDispatch();
 
   const mealId = route.params.mealId;
 
   const selectedMeal = MEALS.find(meal => meal.id === mealId);
 
-  const mealIsFavorite = favoriteMealsCtx.ids.includes(mealId);
-  console.log(favoriteMealsCtx.ids);
-  console.log(mealIsFavorite);
+  const mealIsFavorite = favoriteMealIds.includes(mealId);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const changeFavoriteStatusHandler = () => {
-    console.log(`Button Pressed : ${selectedMeal.id} ${selectedMeal.title}`);
     if (mealIsFavorite) {
-      favoriteMealsCtx.removeFavorite(mealId);
+      dispatch(
+        removeFavorite({
+          id: mealId,
+        }),
+      );
     } else {
-      favoriteMealsCtx.addFavorite(mealId);
+      dispatch(
+        addFavorite({
+          id: mealId,
+        }),
+      );
     }
   };
+
+  // const mealIsFavorite = favoriteMealsCtx.ids.includes(mealId);
+
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // const changeFavoriteStatusHandler = () => {
+  //   console.log(`Button Pressed : ${selectedMeal.id} ${selectedMeal.title}`);
+  //   if (mealIsFavorite) {
+  //     favoriteMealsCtx.removeFavorite(mealId);
+  //   } else {
+  //     favoriteMealsCtx.addFavorite(mealId);
+  //   }
+  // };
 
   useLayoutEffect(() => {
     navigation.setOptions({
