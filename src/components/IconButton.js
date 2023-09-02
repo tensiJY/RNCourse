@@ -1,11 +1,18 @@
 import * as React from 'react';
-import {Pressable, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 
-function IconButton({icon, color, onPress}) {
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+function IconButton({name, color, onPress, size}) {
+  console.log(name, color, size);
   return (
-    <Pressable
-      onPress={onPress}
-      style={({pressed}) => pressed && styles.pressed}></Pressable>
+    <Icon
+      name={name}
+      color={color}
+      onPress={onPress ? onPress : null}
+      size={size}
+      //backgroundColor="black"
+    />
   );
 }
 
