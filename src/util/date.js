@@ -1,8 +1,8 @@
 export function getFormattedDate(date) {
   let month = date.getMonth() + 1;
-  month = month > 10 ? month : `0${month}`;
+  month = month >= 10 ? month : `0${month}`;
   let day = date.getDate();
-  day = day > 10 ? day : `0${day}`;
+  day = day >= 10 ? day : `0${day}`;
   return `${date.getFullYear()}-${month}-${day}`;
 }
 

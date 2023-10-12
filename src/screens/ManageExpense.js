@@ -4,6 +4,7 @@ import VectorIconButton from '../components/Common/VectorIconButton';
 import {GlobalStyles} from '../constants/styles';
 import Button from '../components/Common/Button';
 import {ExpenseContext} from '../store/expenses-context';
+import ExpenseForm from '../components/ManageExpense/ExpenseForm';
 
 const ManageExpense = ({route, navigation}) => {
   const expensesCtx = React.useContext(ExpenseContext);
@@ -29,19 +30,12 @@ const ManageExpense = ({route, navigation}) => {
     close();
   }
 
-  function confirmHandler() {
+  function confirmHandler(expenseData) {
+    console.log('Expense : ', expenseData);
     if (isEditing) {
-      expensesCtx.updateExpense(expenseId, {
-        description: 'Test!!',
-        amount: 18.0,
-        date: new Date(),
-      });
+      expensesCtx.updateExpense(expenseId, expenseData);
     } else {
-      expensesCtx.addExpense({
-        description: 'Test',
-        amount: 18.0,
-        date: new Date(),
-      });
+      expensesCtx.addExpense(expenseData);
     }
     close();
   }
@@ -52,14 +46,12 @@ const ManageExpense = ({route, navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttons}>
-        <Button style={styles.button} mode="flat" onPress={cancelHandler}>
-          Cancel
-        </Button>
-        <Button style={styles.button} onPress={confirmHandler}>
-          {isEditing ? 'Update' : 'Add'}
-        </Button>
-      </View>
+      <ExpenseForm
+        submitButtonLabel={isEditing ? 'Update' : 'Add'}
+        onCancel={cancelHandler}
+        onSubmit={confirmHandler}
+      />
+
       {isEditing && (
         <View style={styles.deleteContainer}>
           <VectorIconButton
@@ -82,15 +74,7 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: GlobalStyles.colors.primary800,
   },
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  button: {
-    minWidth: 120,
-    marginHorizontal: 8,
-  },
+
   deleteContainer: {
     marginTop: 16,
     paddingTop: 8,
